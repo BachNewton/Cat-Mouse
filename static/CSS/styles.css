@@ -1,0 +1,49 @@
+body {
+    margin: 0;
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+}
+
+.HUD {
+    position: absolute;
+    color: white;
+    z-index: 1;
+}
+
+.topCenter {
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+}
+
+.middleLeft {
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    padding: 5px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.middleCenter {
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.75);
+    padding: 5px;
+}
+
+.massiveFont {
+    font-size: 6em;
+}
+
+.largeFont {
+    font-size: 3em;
+}
+
+.mediumFont {
+    font-size: 2em;
+}
