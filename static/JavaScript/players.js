@@ -1,5 +1,5 @@
 socket.on('player', function (data) {
-    if (models.player !== undefined) {
+    if (models.cat !== undefined) {
         if (players[data.id] === undefined) {
             newPlayer(data);
         } else {
@@ -22,11 +22,10 @@ function movePlayer(data) {
         model.position.set(p.x, p.y, p.z);
         model.rotation.set(r.x, r.y, r.z);
 
-        // The player model looks to the "right" by default, so we must correct it
-        model.rotateY(Math.PI / 2 - Math.PI / 16);
-
-        // The player model is in the ground, so we must correct it
-        model.translateY(0.3);
+        // Adjust the model to the correct orientation and positioning
+        model.translateY(-0.5);
+        model.rotateY(Math.PI);
+        model.translateZ(-0.4);
     }
 
     if (player.buildMode !== data.data.buildMode) {
@@ -47,7 +46,7 @@ function newPlayer(data) {
     var material = new THREE.MeshBasicMaterial();
     var cameraModel = new THREE.Mesh(geometry, material);
 
-    var playerModel = models.player.clone();
+    var playerModel = models.cat.clone();
 
     players[data.id] = {
         cameraModel: cameraModel,

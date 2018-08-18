@@ -1,5 +1,5 @@
 function loadAllModels() {
-    loadOBJObject('player', 'static/Models/player/', 'model.obj', 'materials.mtl', 0.5, 0.8);
+    loadOBJObject('cat', 'static/Models/cat/', 'cat.obj', 'cat.mtl', 1);
 }
 
 function loadOBJObject(name, path, OBJFileName, MTLFileName, scale, yOffset) {
@@ -18,11 +18,21 @@ function loadOBJObject(name, path, OBJFileName, MTLFileName, scale, yOffset) {
         OBJLoader.load(OBJFileName, function (loadedObject) {
             loadedObject.scale.multiplyScalar(scale);
 
-            if (yOffset !== undefined) {
-                loadedObject.translateY(yOffset);
-            }
-            
             models[name] = loadedObject;
+
+            finishedLoading(name);
         });
     });
+}
+
+function finishedLoading(name) {
+    var model = models[name];
+
+    if (name === 'cat') {
+        model.translateY(-0.5);
+        model.rotateY(Math.PI);
+        model.translateZ(-0.4);
+
+        firstPersonCameraMesh.add(model);
+    }
 }

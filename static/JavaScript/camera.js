@@ -4,7 +4,9 @@ function setUpCameras() {
     cameraAnchor.add(camera);
     scene.add(cameraAnchor);
 
-    firstPersonCamera.translateY(0.5);
+    firstPersonCamera.translateY(0.7);
+    firstPersonCamera.translateZ(0.5);
+
     firstPersonCameraAnchor.add(firstPersonCamera);
     firstPersonCameraMesh.add(firstPersonCameraAnchor);
     firstPersonCameraMesh.translateX(-1);
@@ -13,8 +15,8 @@ function setUpCameras() {
 }
 
 function getFirstPersonCameraMesh() {
-    var geometry = new THREE.CylinderGeometry(0.2, 0.2, 1);
-    var material = new THREE.MeshBasicMaterial();
+    var geometry = new THREE.BoxGeometry(0.4, 1, 1.1, 2, 2, 2);
+    var material = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0 });
     var mesh = new THREE.Mesh(geometry, material);
 
     mesh.translateY(0.5);
