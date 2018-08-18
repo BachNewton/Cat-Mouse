@@ -18,14 +18,14 @@ function checkCollision(object, objects) {
         var collisionResults = ray.intersectObjects(objects);
 
         if (collisionResults.length > 0 && collisionResults[0].distance < distanceToVertex) {
-            impulseResponse(object, collisionResults[0].face.normal);
+            impulseResponse(object, collisionResults[0].face.normal, objects);
             break;
         }
     }
 }
 
-function impulseResponse(object, normal) {
-    var velocity = object.velocity;
+function impulseResponse(object, normal, objects) {
+    var velocity = object.velocity.clone();
 
     var angle = velocity.angleTo(normal);
 
@@ -35,5 +35,7 @@ function impulseResponse(object, normal) {
         velocity.multiply(normal);
 
         object.position.add(velocity);
+        
+        checkCollision(object, objects);
     }
 }

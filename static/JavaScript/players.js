@@ -26,7 +26,7 @@ function movePlayer(data) {
         model.rotateY(Math.PI / 2 - Math.PI / 16);
 
         // The player model is in the ground, so we must correct it
-        model.translateY(0.8);
+        model.translateY(0.3);
     }
 
     if (player.buildMode !== data.data.buildMode) {
