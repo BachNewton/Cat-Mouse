@@ -45,13 +45,38 @@ var rows = maze2.split('\n');
 var walls = [];
 
 for (var row = 0; row < rows.length; row++) {
+    var start = null;
+
     for (var col = 0; col < rows[row].length; col++) {
         var char = rows[row][col];
 
         if (char !== ' ') {
-            walls.push({ x: col, y: 0, z: row });
+            if (start === null) {
+                start = col;
+            }
+        } else if (start !== null) {
+            makeWall(col, row, start);
+            start = null;
         }
     }
+
+    if (start !== null) {
+        makeWall(col, row, start);
+    }
+}
+
+function makeWall(col, row, start) {
+    var wallHeight = 3;
+
+    var wallLength = col - start;
+    var center = (col + start) / 2;
+
+    walls.push({
+        width: wallLength,
+        height: wallHeight,
+        depth: 1,
+        position: { x: center, y: wallHeight / 2, z: row }
+    });
 }
 
 exports.getWalls = function () {

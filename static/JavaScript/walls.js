@@ -1,19 +1,18 @@
 socket.on('walls', function (serverWalls) {
-    var wallHeight = 3;
-
     var wallTexture = new THREE.TextureLoader().load('static/Textures/wall.jpg');
+
     wallTexture.wrapS = THREE.RepeatWrapping;
     wallTexture.wrapT = THREE.RepeatWrapping;
-    wallTexture.repeat.set(1, 2.5);
+    wallTexture.repeat.set(3, 2.5);
 
     for (var wall of serverWalls) {
-        var geometry = new THREE.BoxGeometry(1, wallHeight, 1);
+        var geometry = new THREE.BoxGeometry(wall.width, wall.height, wall.depth);
         var material = new THREE.MeshLambertMaterial({ map: wallTexture });
         var wallMesh = new THREE.Mesh(geometry, material);
 
-        wallMesh.translateX(wall.x);
-        wallMesh.translateY(wallHeight / 2);
-        wallMesh.translateZ(wall.z);
+        wallMesh.translateX(wall.position.x);
+        wallMesh.translateY(wall.position.y);
+        wallMesh.translateZ(wall.position.z);
 
         scene.add(wallMesh);
         walls.push(wallMesh);

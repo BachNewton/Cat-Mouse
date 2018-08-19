@@ -21,7 +21,7 @@ server.listen(5000, function () {
     console.log('Starting server on port 5000');
 });
 
-var maze = require('./server_js/maze.js');
+var maze = require('./js/maze.js');
 var walls = maze.getWalls();
 
 var players = {};
