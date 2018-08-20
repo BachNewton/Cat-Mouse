@@ -1,14 +1,33 @@
 socket.on('walls', function (serverWalls) {
-    var wallTexture = new THREE.TextureLoader().load('static/Textures/wall.jpg');
-
-    wallTexture.wrapS = THREE.RepeatWrapping;
-    wallTexture.wrapT = THREE.RepeatWrapping;
-    wallTexture.repeat.set(3, 2.5);
+    var textureLoader = new THREE.TextureLoader();
 
     for (var wall of serverWalls) {
+        var wallTextureWidth = textureLoader.load('static/Textures/wall.jpg');
+        var wallTextureDepth = textureLoader.load('static/Textures/wall.jpg');
+
+        const U = 1;
+        const V = 1;
+
+        wallTextureWidth.wrapS = THREE.RepeatWrapping;
+        wallTextureWidth.wrapT = THREE.RepeatWrapping;
+        wallTextureWidth.repeat.set(U * wall.width, V * wall.height);
+
+        wallTextureDepth.wrapS = THREE.RepeatWrapping;
+        wallTextureDepth.wrapT = THREE.RepeatWrapping;
+        wallTextureDepth.repeat.set(U * wall.depth, V * wall.height);
+
         var geometry = new THREE.BoxGeometry(wall.width, wall.height, wall.depth);
-        var material = new THREE.MeshLambertMaterial({ map: wallTexture });
-        var wallMesh = new THREE.Mesh(geometry, material);
+
+        var materials = [
+            new THREE.MeshLambertMaterial({ map: wallTextureDepth }),
+            new THREE.MeshLambertMaterial({ map: wallTextureDepth }),
+            new THREE.MeshLambertMaterial({ map: wallTextureWidth }),
+            new THREE.MeshLambertMaterial({ map: wallTextureWidth }),
+            new THREE.MeshLambertMaterial({ map: wallTextureWidth }),
+            new THREE.MeshLambertMaterial({ map: wallTextureWidth })
+        ];
+
+        var wallMesh = new THREE.Mesh(geometry, materials);
 
         wallMesh.translateX(wall.position.x);
         wallMesh.translateY(wall.position.y);
