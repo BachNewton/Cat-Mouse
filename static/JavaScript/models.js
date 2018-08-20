@@ -1,5 +1,6 @@
 function loadAllModels() {
     loadOBJObject('cat', 'static/Models/cat/', 'cat.obj', 'cat.mtl', 1);
+    loadOBJObject('mouse', 'static/Models/mouse/', 'CairoSpinyMouse.obj', 'CairoSpinyMouse.mtl', 0.3);
 }
 
 function loadOBJObject(name, path, OBJFileName, MTLFileName, scale, yOffset) {
@@ -34,5 +35,11 @@ function finishedLoading(name) {
         model.translateZ(-0.4);
 
         firstPersonCameraMesh.add(model);
+    } else if (name === 'mouse') {
+        model.translateZ(-1);
+        model.translateX(-1);
+        model.rotateY(Math.PI);
+
+        scene.add(model);
     }
 }

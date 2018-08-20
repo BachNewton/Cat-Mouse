@@ -8,9 +8,11 @@ function setUpCameras() {
     firstPersonCamera.translateZ(0.5);
 
     firstPersonCameraAnchor.add(firstPersonCamera);
+
     firstPersonCameraMesh.add(firstPersonCameraAnchor);
     firstPersonCameraMesh.translateX(-1);
     firstPersonCameraMesh.translateZ(-1);
+
     scene.add(firstPersonCameraMesh);
 }
 
