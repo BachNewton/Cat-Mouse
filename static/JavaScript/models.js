@@ -21,12 +21,12 @@ function loadOBJObject(name, path, OBJFileName, MTLFileName, scale, yOffset) {
 
             models[name] = loadedObject;
 
-            finishedLoading(name);
+            finishedLoadingModel(name);
         });
     });
 }
 
-function finishedLoading(name) {
+function finishedLoadingModel(name) {
     var model = models[name];
 
     if (name === 'cat') {
@@ -34,12 +34,31 @@ function finishedLoading(name) {
         model.rotateY(Math.PI);
         model.translateZ(-0.4);
 
-        firstPersonCameraMesh.add(model);
+        catMeshBox.add(model);
     } else if (name === 'mouse') {
-        model.translateZ(-1);
-        model.translateX(-1);
+        model.translateY(-0.25);
         model.rotateY(Math.PI);
 
-        scene.add(model);
+        mouseMeshBox.add(model);
     }
+}
+
+function getCatMeshBox() {
+    var geometry = new THREE.BoxGeometry(0.4, 1, 1.1, 2, 2, 2);
+    var material = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0 });
+    var mesh = new THREE.Mesh(geometry, material);
+
+    mesh.position.set(-1, 0.5, -1);
+
+    return mesh;
+}
+
+function getMouseMeshBox() {
+    var geometry = new THREE.BoxGeometry(0.3, 0.5, 0.8, 2, 2, 2);
+    var material = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0 });
+    var mesh = new THREE.Mesh(geometry, material);
+
+    mesh.position.set(-1, 0.25, -1);
+
+    return mesh;
 }

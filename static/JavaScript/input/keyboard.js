@@ -11,8 +11,10 @@ document.addEventListener('keyup', function (event) {
 
 function checkKey(code) {
     if (code === 'KeyC') {
-        enterCivilianMode();
+        enterCatMode();
     } else if (code === 'KeyB') {
-        enterBuildMode();
+        enterThirdPersonMode();
+    } else if (code === 'KeyM') {
+        enterMouseMode();
     }
 }

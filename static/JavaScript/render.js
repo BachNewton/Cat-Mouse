@@ -3,13 +3,18 @@ function animate() {
 
     stats.begin();
 
-    if (buildMode) {
+    if (gameplayMode === 'third-person') {
         renderer.render(scene, camera);
         updateCamera();
     } else {
         renderer.render(scene, firstPersonCamera);
         updateFirstPersonCamera();
-        checkCollision(firstPersonCameraMesh, walls);
+    }
+
+    if (gameplayMode === 'cat') {
+        checkCollision(catMeshBox, walls);
+    } else if (gameplayMode === 'mouse') {
+        checkCollision(mouseMeshBox, walls);
     }
 
     stats.end();

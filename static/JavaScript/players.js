@@ -66,36 +66,60 @@ function newPlayer(data) {
 socket.on('bye bye player', function (id) {
     var player = players[id];
 
-    if (player != undefined) {
+    if (player !== undefined) {
         scene.remove(player.cameraModel);
         scene.remove(player.playerModel);
         delete players[id];
     }
 });
 
-function enterCivilianMode() {
-    renderer.domElement.requestPointerLock = renderer.domElement.requestPointerLock || renderer.domElement.mozRequestPointerLock || renderer.domElement.webkitRequestPointerLock;
-    renderer.domElement.requestPointerLock();
+function enterCatMode() {
+    lockPointer();
 
-    if (buildMode) {
-        buildMode = false;
-        document.getElementById('title').innerText = 'First Person';
+    if (gameplayMode !== 'cat') {
+        gameplayMode = 'cat';
+        document.getElementById('title').innerText = 'Cat';
+        scene.remove(mouseMeshBox);
+        mouseMeshBox.remove(firstPersonCamera);
+        updateFirstPersonCameraPosition();
+        catMeshBox.add(firstPersonCamera);
+        scene.add(catMeshBox);
         sendUpdateToServer();
     }
 }
 
-function enterBuildMode() {
+function enterMouseMode() {
+    lockPointer();
+
+    if (gameplayMode !== 'mouse') {
+        gameplayMode = 'mouse';
+        document.getElementById('title').innerText = 'Mouse';
+        scene.remove(catMeshBox);
+        catMeshBox.remove(firstPersonCamera);
+        updateFirstPersonCameraPosition();
+        mouseMeshBox.add(firstPersonCamera);
+        scene.add(mouseMeshBox);
+        sendUpdateToServer();
+    }
+}
+
+function lockPointer() {
+    renderer.domElement.requestPointerLock = renderer.domElement.requestPointerLock || renderer.domElement.mozRequestPointerLock || renderer.domElement.webkitRequestPointerLock;
+    renderer.domElement.requestPointerLock();
+}
+
+function enterThirdPersonMode() {
     document.exitPointerLock();
 
-    if (!buildMode) {
-        buildMode = true;
-        document.getElementById('title').innerText = 'Third Person';
+    if (gameplayMode !== 'third-person') {
+        gameplayMode = 'third-person';
+        document.getElementById('title').innerText = 'Third-Person';
         sendUpdateToServer();
     }
 }
 
 function sendUpdateToServer() {
-    if (buildMode) {
+    if (gameplayMode === 'third-person') {
         var worldPosition = new THREE.Vector3();
         camera.getWorldPosition(worldPosition);
 
@@ -107,21 +131,27 @@ function sendUpdateToServer() {
             }
         };
     } else {
+        if (gameplayMode === 'cat') {
+            var mesh = catMeshBox;
+        } else if (gameplayMode === 'mouse') {
+            var mesh = mouseMeshBox;
+        }
+
         var data = {
             position: {
-                x: firstPersonCameraMesh.position.x,
-                y: firstPersonCameraMesh.position.y,
-                z: firstPersonCameraMesh.position.z
+                x: mesh.position.x,
+                y: mesh.position.y,
+                z: mesh.position.z
             },
             rotation: {
-                x: firstPersonCameraMesh.rotation.x,
-                y: firstPersonCameraMesh.rotation.y,
-                z: firstPersonCameraMesh.rotation.z
+                x: mesh.rotation.x,
+                y: mesh.rotation.y,
+                z: mesh.rotation.z
             }
         };
     }
 
-    data.buildMode = buildMode;
+    data.gameplayMode = gameplayMode;
 
     socket.emit('player', data);
 }

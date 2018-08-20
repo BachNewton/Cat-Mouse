@@ -4,26 +4,17 @@ function setUpCameras() {
     cameraAnchor.add(camera);
     scene.add(cameraAnchor);
 
-    firstPersonCamera.translateY(0.7);
-    firstPersonCamera.translateZ(0.5);
-
-    firstPersonCameraAnchor.add(firstPersonCamera);
-
-    firstPersonCameraMesh.add(firstPersonCameraAnchor);
-    firstPersonCameraMesh.translateX(-1);
-    firstPersonCameraMesh.translateZ(-1);
-
-    scene.add(firstPersonCameraMesh);
+    updateFirstPersonCameraPosition();
+    catMeshBox.add(firstPersonCamera);
+    scene.add(catMeshBox);
 }
 
-function getFirstPersonCameraMesh() {
-    var geometry = new THREE.BoxGeometry(0.4, 1, 1.1, 2, 2, 2);
-    var material = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0 });
-    var mesh = new THREE.Mesh(geometry, material);
-
-    mesh.translateY(0.5);
-
-    return mesh;
+function updateFirstPersonCameraPosition() {
+    if (gameplayMode === 'cat') {
+        firstPersonCamera.position.set(0, 0.7, 0.5);
+    } else if (gameplayMode === 'mouse') {
+        firstPersonCamera.position.set(0, 0.3, 0.2);
+    }
 }
 
 function updateAspects() {
@@ -114,33 +105,57 @@ function updateFirstPersonCamera() {
         translateSpeed *= 2;
     }
 
-    var oldPosition = firstPersonCameraMesh.position.clone();
+    if (gameplayMode === 'cat') {
+        var mesh = catMeshBox;
+    } else if (gameplayMode === 'mouse') {
+        var mesh = mouseMeshBox;
+    }
+
+    var oldPosition = mesh.position.clone();
 
     if (keysHeld['KeyW']) {
-        firstPersonCameraMesh.translateZ(-translateSpeed);
+        mesh.translateZ(-translateSpeed);
         moved = true;
     }
 
     if (keysHeld['KeyA']) {
-        firstPersonCameraMesh.translateX(-translateSpeed);
+        mesh.translateX(-translateSpeed);
         moved = true;
     }
 
     if (keysHeld['KeyS']) {
-        firstPersonCameraMesh.translateZ(translateSpeed);
+        mesh.translateZ(translateSpeed);
         moved = true;
     }
 
     if (keysHeld['KeyD']) {
-        firstPersonCameraMesh.translateX(translateSpeed);
+        mesh.translateX(translateSpeed);
         moved = true;
     }
 
     if (moved) {
         sendUpdateToServer();
 
-        var newPosition = firstPersonCameraMesh.position.clone();
+        var newPosition = mesh.position.clone();
 
-        firstPersonCameraMesh.velocity = newPosition.sub(oldPosition);
+        mesh.velocity = newPosition.sub(oldPosition);
+    }
+}
+
+function rotateCamera() {
+    if (gameplayMode !== 'third-person') {
+        const SENSITIVITY = 0.0025;
+
+        firstPersonCamera.rotation.x = Math.max(-Math.PI / 2, Math.min(firstPersonCamera.rotation.x + SENSITIVITY * -mouse.movementY, Math.PI / 2));
+
+        if (gameplayMode === 'cat') {
+            var mesh = catMeshBox;
+        } else if (gameplayMode === 'mouse') {
+            var mesh = mouseMeshBox;
+        }
+
+        mesh.rotateY(SENSITIVITY * -mouse.movementX);
+
+        sendUpdateToServer();
     }
 }
