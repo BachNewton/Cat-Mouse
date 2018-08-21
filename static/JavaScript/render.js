@@ -13,6 +13,7 @@ function animate() {
 
     if (gameplayMode === 'cat') {
         checkCollision(catMeshBox, walls);
+        checkCatInRangeOfMice();
     } else if (gameplayMode === 'mouse') {
         checkCollision(mouseMeshBox, walls);
     }

@@ -10,7 +10,6 @@ canvas {
 .HUD {
     position: absolute;
     color: white;
-    z-index: 1;
 }
 
 .topCenter {
@@ -36,6 +35,15 @@ canvas {
     padding: 5px;
 }
 
+.bottomCenter {
+    top: 80%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px;
+}
+
 .massiveFont {
     font-size: 6em;
 }
@@ -46,4 +54,8 @@ canvas {
 
 .mediumFont {
     font-size: 2em;
+}
+
+#prompt {
+    display: none;
 }

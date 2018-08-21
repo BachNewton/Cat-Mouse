@@ -11,6 +11,8 @@ socket.on('player', function (data) {
 function movePlayer(data) {
     var player = players[data.id];
 
+    player.position = data.data.position;
+
     if (data.data.gameplayMode === 'third-person') {
         player.cameraModel.position.set(data.data.position.x, data.data.position.y, data.data.position.z);
     } else {
@@ -165,4 +167,30 @@ function sendUpdateToServer() {
     data.gameplayMode = gameplayMode;
 
     socket.emit('player', data);
+}
+
+function checkCatInRangeOfMice() {
+    var catSphere = new THREE.Sphere(catMeshBox.position, 0.7);
+
+    for (id in players) {
+        var otherPlayer = players[id];
+
+        if (otherPlayer.gameplayMode === 'mouse') {
+            var otherPlayerPosition = new THREE.Vector3(otherPlayer.position.x, otherPlayer.position.y, otherPlayer.position.z);
+
+            var intersects = catSphere.containsPoint(otherPlayerPosition);
+
+            if (intersects) {
+                document.getElementById('prompt').style.display = 'block';
+            } else {
+                document.getElementById('prompt').style.display = 'none';
+            }
+        }
+    }
+}
+
+function catchMouse() {
+    if (gameplayMode === 'cat') {
+        // can catch
+    }
 }
