@@ -30,17 +30,23 @@ function finishedLoadingModel(name) {
     var model = models[name];
 
     if (name === 'cat') {
-        model.translateY(-0.5);
-        model.rotateY(Math.PI);
-        model.translateZ(-0.4);
-
+        adjustCat(model);
         catMeshBox.add(model);
     } else if (name === 'mouse') {
-        model.translateY(-0.25);
-        model.rotateY(Math.PI);
-
+        adjustMouse(model);
         mouseMeshBox.add(model);
     }
+}
+
+function adjustCat(model) {
+    model.translateY(-0.5);
+    model.rotateY(Math.PI);
+    model.translateZ(-0.4);
+}
+
+function adjustMouse(model) {
+    model.translateY(-0.25);
+    model.rotateY(Math.PI);
 }
 
 function getCatMeshBox() {

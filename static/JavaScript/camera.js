@@ -3,10 +3,6 @@ function setUpCameras() {
     camera.translateZ(25);
     cameraAnchor.add(camera);
     scene.add(cameraAnchor);
-
-    updateFirstPersonCameraPosition();
-    catMeshBox.add(firstPersonCamera);
-    scene.add(catMeshBox);
 }
 
 function updateFirstPersonCameraPosition() {

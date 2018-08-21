@@ -1,5 +1,5 @@
 socket.on('player', function (data) {
-    if (models.cat !== undefined) {
+    if (models.cat !== undefined && models.mouse !== undefined) {
         if (players[data.id] === undefined) {
             newPlayer(data);
         } else {
@@ -11,34 +11,42 @@ socket.on('player', function (data) {
 function movePlayer(data) {
     var player = players[data.id];
 
-    if (data.data.buildMode) {
+    if (data.data.gameplayMode === 'third-person') {
         player.cameraModel.position.set(data.data.position.x, data.data.position.y, data.data.position.z);
     } else {
-        var model = player.playerModel;
-
         var p = data.data.position;
         var r = data.data.rotation;
 
-        model.position.set(p.x, p.y, p.z);
-        model.rotation.set(r.x, r.y, r.z);
-
-        // Adjust the model to the correct orientation and positioning
-        model.translateY(-0.5);
-        model.rotateY(Math.PI);
-        model.translateZ(-0.4);
-    }
-
-    if (player.buildMode !== data.data.buildMode) {
-        player.buildMode = data.data.buildMode;
-
-        if (player.buildMode) {
-            scene.remove(player.playerModel);
-            scene.add(player.cameraModel);
-        } else {
-            scene.remove(player.cameraModel);
-            scene.add(player.playerModel);
+        if (data.data.gameplayMode === 'cat') {
+            player.catModel.position.set(p.x, p.y, p.z);
+            player.catModel.rotation.set(r.x, r.y, r.z);
+            adjustCat(player.catModel);
+        } else if (data.data.gameplayMode === 'mouse') {
+            player.mouseModel.position.set(p.x, p.y, p.z);
+            player.mouseModel.rotation.set(r.x, r.y, r.z);
+            adjustMouse(player.mouseModel);
         }
     }
+
+    if (player.gameplayMode !== data.data.gameplayMode) {
+        player.gameplayMode = data.data.gameplayMode;
+
+        removeAllModels(player);
+
+        if (player.gameplayMode === 'third-person') {
+            scene.add(player.cameraModel);
+        } else if (player.gameplayMode === 'cat') {
+            scene.add(player.catModel);
+        } else if (player.gameplayMode === 'mouse') {
+            scene.add(player.mouseModel);
+        }
+    }
+}
+
+function removeAllModels(player) {
+    scene.remove(player.cameraModel);
+    scene.remove(player.catModel);
+    scene.remove(player.mouseModel);
 }
 
 function newPlayer(data) {
@@ -46,18 +54,22 @@ function newPlayer(data) {
     var material = new THREE.MeshBasicMaterial();
     var cameraModel = new THREE.Mesh(geometry, material);
 
-    var playerModel = models.cat.clone();
+    var catModel = models.cat.clone();
+    var mouseModel = models.mouse.clone();
 
     players[data.id] = {
         cameraModel: cameraModel,
-        playerModel: playerModel,
-        buildMode: data.data.buildMode
+        catModel: catModel,
+        mouseModel: mouseModel,
+        gameplayMode: data.data.gameplayMode
     };
 
-    if (data.data.buildMode) {
+    if (data.data.gameplayMode === 'third-person') {
         scene.add(cameraModel);
-    } else {
-        scene.add(playerModel);
+    } else if (data.data.gameplayMode === 'cat') {
+        scene.add(catModel);
+    } else if (data.data.gameplayMode === 'mouse') {
+        scene.add(mouseModel);
     }
 
     movePlayer(data);
@@ -67,8 +79,7 @@ socket.on('bye bye player', function (id) {
     var player = players[id];
 
     if (player !== undefined) {
-        scene.remove(player.cameraModel);
-        scene.remove(player.playerModel);
+        removeAllModels(player);
         delete players[id];
     }
 });
