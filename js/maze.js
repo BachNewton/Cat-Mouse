@@ -15,6 +15,8 @@ var maze = '\
 ';
 
 var maze2 = '\
+                                                                      M  \n\
+\n\
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa   a\n\
 8   8               8               8           8                   8   8\n\
 8   8   aaaaaaaaa   8   aaaaa   aaaa8aaaa   aaaa8   aaaaa   aaaaa   8   8\n\
@@ -38,11 +40,15 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa   a\n\
 8   8   aaaa8   8aaa8   aaaaa   8aaaaaaaa   8aaa8   a   8aaaaaaaa   a   8\n\
 8   8                   8           8               8               8   8\n\
 8   8aaaaaaaaaaaaaaaaaaa8aaaaaaaaaaa8aaaaaaaaaaaaaaa8aaaaaaaaaaaaaaa8aaa8\n\
+\n\
+   C\
 ';
 
 var rows = maze2.split('\n');
 
 var walls = [];
+var catPosition = { x: -1, z: -1 };
+var mousePosition = { x: -1, z: -1 };
 
 for (var row = 0; row < rows.length; row++) {
     var start = null;
@@ -50,7 +56,11 @@ for (var row = 0; row < rows.length; row++) {
     for (var col = 0; col < rows[row].length; col++) {
         var char = rows[row][col];
 
-        if (char !== ' ') {
+        if (char === 'C') {
+            catPosition = { x: col, z: row };
+        } else if (char === 'M') {
+            mousePosition = { x: col, z: row };
+        } else if (char !== ' ') {
             if (start === null) {
                 start = col;
             }
@@ -81,4 +91,12 @@ function makeWall(col, row, start) {
 
 exports.getWalls = function () {
     return walls;
+}
+
+exports.getCatPosition = function () {
+    return catPosition;
+}
+
+exports.getMousePosition = function () {
+    return mousePosition;
 }

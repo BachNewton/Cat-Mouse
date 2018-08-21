@@ -68,3 +68,16 @@ function getMouseMeshBox() {
 
     return mesh;
 }
+
+socket.on('cat start', function (data) {
+    catMeshBox.position.x = data.x;
+    catMeshBox.position.z = data.z;
+});
+
+socket.on('mouse start', function (data) {
+    mouseMeshBox.position.x = data.x;
+    mouseMeshBox.position.z = data.z;
+
+    // Look towards the maze :-)
+    mouseMeshBox.rotateY(Math.PI);
+});

@@ -32,6 +32,8 @@ io.on('connection', function (socket) {
         console.log('A new player has connected! ID: ' + socket.id);
 
         socket.emit('walls', walls);
+        socket.emit('cat start', maze.getCatPosition());
+        socket.emit('mouse start', maze.getMousePosition());
     });
 
     socket.on('player', function (data) {
