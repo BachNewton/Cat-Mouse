@@ -45,6 +45,12 @@ io.on('connection', function (socket) {
         socket.broadcast.emit('player', players[socket.id]);
     });
 
+    socket.on('mouse caught', function (id) {
+        console.log('A Mouse has been caught! ID: ' + id);
+
+        io.sockets.sockets[id].emit('mouse start', maze.getMousePosition());
+    });
+
     socket.on('disconnect', function () {
         console.log('A player has disconnected! ID: ' + socket.id);
 

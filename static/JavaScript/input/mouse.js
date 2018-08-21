@@ -21,5 +21,5 @@ document.addEventListener('mousemove', function (event) {
 });
 
 document.addEventListener('mousedown', function () {
-    // Mouse has been pressed down
+    tryToCatchMouse();
 });

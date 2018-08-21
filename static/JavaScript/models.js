@@ -79,5 +79,7 @@ socket.on('mouse start', function (data) {
     mouseMeshBox.position.z = data.z;
 
     // Look towards the maze :-)
-    mouseMeshBox.rotateY(Math.PI);
+    mouseMeshBox.lookAt(mouseMeshBox.position.x, mouseMeshBox.position.y, mouseMeshBox.position.z - 1);
+
+    sendUpdateToServer();
 });

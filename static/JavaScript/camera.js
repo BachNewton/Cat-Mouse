@@ -143,6 +143,8 @@ function rotateCamera() {
         const SENSITIVITY = 0.0025;
 
         firstPersonCamera.rotation.x = Math.max(-Math.PI / 2, Math.min(firstPersonCamera.rotation.x + SENSITIVITY * -mouse.movementY, Math.PI / 2));
+        // firstPersonCamera.rotation.x = Math.max(-Math.PI / 2, Math.min(firstPersonCamera.rotation.x + SENSITIVITY * -touch.movementY, Math.PI / 2));
+
 
         if (gameplayMode === 'cat') {
             var mesh = catMeshBox;
@@ -151,6 +153,7 @@ function rotateCamera() {
         }
 
         mesh.rotateY(SENSITIVITY * -mouse.movementX);
+        // mesh.rotateY(SENSITIVITY * -touch.movementX);
 
         sendUpdateToServer();
     }

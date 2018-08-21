@@ -170,9 +170,11 @@ function sendUpdateToServer() {
 }
 
 function checkCatInRangeOfMice() {
-    var catSphere = new THREE.Sphere(catMeshBox.position, 0.7);
+    const RADIUS = 0.7;
 
-    for (id in players) {
+    var catSphere = new THREE.Sphere(catMeshBox.position, RADIUS);
+
+    for (var id in players) {
         var otherPlayer = players[id];
 
         if (otherPlayer.gameplayMode === 'mouse') {
@@ -182,15 +184,22 @@ function checkCatInRangeOfMice() {
 
             if (intersects) {
                 document.getElementById('prompt').style.display = 'block';
+                return id;
             } else {
                 document.getElementById('prompt').style.display = 'none';
             }
         }
     }
+
+    return null;
 }
 
-function catchMouse() {
+function tryToCatchMouse() {
     if (gameplayMode === 'cat') {
-        // can catch
+        var id = checkCatInRangeOfMice();
+
+        if (id !== null) {
+            socket.emit('mouse caught', id);
+        }
     }
 }
