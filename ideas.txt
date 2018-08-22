@@ -1,0 +1,4 @@
+- Cat has some indicatrion of how far mouse is
+    * The more percise it is, the less it updates
+- Mouse has to get cheese
+    * More than one cheese?

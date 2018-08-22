@@ -4,7 +4,7 @@ function getGround() {
     texture.wrapS = THREE.RepeatWrapping;
     texture.wrapT = THREE.RepeatWrapping;
     texture.repeat.set(500, 500);
-    var material = new THREE.MeshBasicMaterial({ map: texture });
+    var material = new THREE.MeshPhongMaterial({ map: texture, shininess: 0 });
     var ground = new THREE.Mesh(geometry, material);
     ground.rotateX(-Math.PI / 2);
     scene.add(ground);

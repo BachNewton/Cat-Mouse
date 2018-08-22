@@ -1,6 +1,7 @@
 function loadAllModels() {
     loadOBJObject('cat', 'static/Models/cat/', 'cat.obj', 'cat.mtl', 1);
     loadOBJObject('mouse', 'static/Models/mouse/', 'CairoSpinyMouse.obj', 'CairoSpinyMouse.mtl', 0.3);
+    loadOBJObject('city', 'static/Models/city/', 'The City.obj', 'The_City.mtl', 0.01);
 }
 
 function loadOBJObject(name, path, OBJFileName, MTLFileName, scale, yOffset) {

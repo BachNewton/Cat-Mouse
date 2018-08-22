@@ -19,12 +19,12 @@ socket.on('walls', function (serverWalls) {
         var geometry = new THREE.BoxGeometry(wall.width, wall.height, wall.depth);
 
         var materials = [
-            new THREE.MeshLambertMaterial({ map: wallTextureDepth }),
-            new THREE.MeshLambertMaterial({ map: wallTextureDepth }),
-            new THREE.MeshLambertMaterial({ map: wallTextureWidth }),
-            new THREE.MeshLambertMaterial({ map: wallTextureWidth }),
-            new THREE.MeshLambertMaterial({ map: wallTextureWidth }),
-            new THREE.MeshLambertMaterial({ map: wallTextureWidth })
+            new THREE.MeshPhongMaterial({ map: wallTextureDepth, shininess: 0 }),
+            new THREE.MeshPhongMaterial({ map: wallTextureDepth, shininess: 0 }),
+            new THREE.MeshPhongMaterial({ map: wallTextureWidth, shininess: 0 }),
+            new THREE.MeshPhongMaterial({ map: wallTextureWidth, shininess: 0 }),
+            new THREE.MeshPhongMaterial({ map: wallTextureWidth, shininess: 0 }),
+            new THREE.MeshPhongMaterial({ map: wallTextureWidth, shininess: 0 })
         ];
 
         var wallMesh = new THREE.Mesh(geometry, materials);
