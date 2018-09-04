@@ -3,7 +3,7 @@ function loadAllModels() {
     loadOBJObject('mouse', 'static/Models/mouse/', 'CairoSpinyMouse.obj', 'CairoSpinyMouse.mtl', 0.3);
 }
 
-function loadOBJObject(name, path, OBJFileName, MTLFileName, scale, yOffset) {
+function loadOBJObject(name, path, OBJFileName, MTLFileName, scale) {
     var MTLLoader = new THREE.MTLLoader();
 
     MTLLoader.setPath(path);
