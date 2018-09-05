@@ -2,6 +2,7 @@ function loadAllModels() {
     loadOBJObject('cat', 'static/Models/cat/', 'cat.obj', 'cat.mtl', 1);
     loadOBJObject('mouse', 'static/Models/mouse/', 'CairoSpinyMouse.obj', 'CairoSpinyMouse.mtl', 0.3);
     loadOBJObject('room', 'static/Models/room/', 'model-triangulated.obj', 'materials.mtl', 4);
+    loadOBJObject('cheese', 'static/Models/cheese/', 'model.obj', 'materials.mtl', 1.5);
 }
 
 function loadOBJObject(name, path, OBJFileName, MTLFileName, scale) {
@@ -40,6 +41,8 @@ function finishedLoadingModel(name) {
         model.translateY(3.4);
         walls.push(model);
         scene.add(model);
+    } else if (name === 'cheese') {
+        placeCheeses();
     }
 }
 

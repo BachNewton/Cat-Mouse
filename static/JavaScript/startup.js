@@ -27,6 +27,7 @@ stats.showPanel(0);
 document.body.appendChild(stats.dom);
 
 var walls = [];
+var cheeses = [];
 
 // addSkybox();
 
@@ -34,5 +35,7 @@ makeGround();
 
 var models = {};
 loadAllModels();
+
+var cheeseProperties = getCheeseProperties();
 
 animate();

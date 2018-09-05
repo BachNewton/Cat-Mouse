@@ -22,6 +22,8 @@ function animate() {
         checkCollision(mouseMeshBox, walls, 0);
     }
 
+    updateCheeses();
+
     stats.end();
 }
 

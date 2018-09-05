@@ -19,6 +19,6 @@ function checkKey(code) {
     } else if (code === 'Space') {
         jump();
     } else if (code === 'Backslash') {
-        console.log(mouseMeshBox.position);
+        console.log('{ ' + mouseMeshBox.position.x + ', ' + mouseMeshBox.position.y + ', ' + mouseMeshBox.position.z + ' }');
     }
 }
