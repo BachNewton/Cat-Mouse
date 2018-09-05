@@ -6,9 +6,9 @@ function setUpCameras() {
 }
 
 function updateFirstPersonCameraPosition() {
-    if (gameplayMode === 'cat') {
+    if (gameplayMode === GAMEPLAY_MODES.CAT) {
         firstPersonCamera.position.set(0, 0.7, 0.5);
-    } else if (gameplayMode === 'mouse') {
+    } else if (gameplayMode === GAMEPLAY_MODES.MOUSE) {
         firstPersonCamera.position.set(0, 0.3, 0.2);
     }
 }
@@ -101,9 +101,9 @@ function updateFirstPersonCamera() {
         translateSpeed *= 2;
     }
 
-    if (gameplayMode === 'cat') {
+    if (gameplayMode === GAMEPLAY_MODES.CAT) {
         var mesh = catMeshBox;
-    } else if (gameplayMode === 'mouse') {
+    } else if (gameplayMode === GAMEPLAY_MODES.MOUSE) {
         var mesh = mouseMeshBox;
     }
 
@@ -139,16 +139,16 @@ function updateFirstPersonCamera() {
 }
 
 function rotateCamera() {
-    if (gameplayMode !== 'third-person') {
+    if (gameplayMode !== GAMEPLAY_MODES.THIRD_PERSON) {
         const SENSITIVITY = 0.0025;
 
         firstPersonCamera.rotation.x = Math.max(-Math.PI / 2, Math.min(firstPersonCamera.rotation.x + SENSITIVITY * -mouse.movementY, Math.PI / 2));
         // firstPersonCamera.rotation.x = Math.max(-Math.PI / 2, Math.min(firstPersonCamera.rotation.x + SENSITIVITY * -touch.movementY, Math.PI / 2));
 
 
-        if (gameplayMode === 'cat') {
+        if (gameplayMode === GAMEPLAY_MODES.CAT) {
             var mesh = catMeshBox;
-        } else if (gameplayMode === 'mouse') {
+        } else if (gameplayMode === GAMEPLAY_MODES.MOUSE) {
             var mesh = mouseMeshBox;
         }
 

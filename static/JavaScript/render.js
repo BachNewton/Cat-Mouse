@@ -3,7 +3,7 @@ function animate() {
 
     stats.begin();
 
-    if (gameplayMode === 'third-person') {
+    if (gameplayMode === GAMEPLAY_MODES.THIRD_PERSON) {
         renderer.render(scene, camera);
         updateCamera();
     } else {
@@ -11,12 +11,12 @@ function animate() {
         updateFirstPersonCamera();
     }
 
-    if (gameplayMode === 'cat') {
+    if (gameplayMode === GAMEPLAY_MODES.CAT) {
         applyGravity(catMeshBox);
         applyFall(catMeshBox);
         checkCollision(catMeshBox, walls);
         checkCatInRangeOfMice();
-    } else if (gameplayMode === 'mouse') {
+    } else if (gameplayMode === GAMEPLAY_MODES.MOUSE) {
         applyGravity(mouseMeshBox);
         applyFall(mouseMeshBox);
         checkCollision(mouseMeshBox, walls);

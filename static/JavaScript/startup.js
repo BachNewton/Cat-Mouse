@@ -15,7 +15,8 @@ var renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-var gameplayMode = 'third-person';
+const GAMEPLAY_MODES = { THIRD_PERSON: 0, CAT: 1, MOUSE: 2 };
+var gameplayMode = GAMEPLAY_MODES.THIRD_PERSON;
 
 var players = {};
 socket.emit('new player');

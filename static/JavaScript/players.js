@@ -13,17 +13,17 @@ function movePlayer(data) {
 
     player.position = data.data.position;
 
-    if (data.data.gameplayMode === 'third-person') {
+    if (data.data.gameplayMode === GAMEPLAY_MODES.THIRD_PERSON) {
         player.cameraModel.position.set(data.data.position.x, data.data.position.y, data.data.position.z);
     } else {
         var p = data.data.position;
         var r = data.data.rotation;
 
-        if (data.data.gameplayMode === 'cat') {
+        if (data.data.gameplayMode === GAMEPLAY_MODES.CAT) {
             player.catModel.position.set(p.x, p.y, p.z);
             player.catModel.rotation.set(r.x, r.y, r.z);
             adjustCat(player.catModel);
-        } else if (data.data.gameplayMode === 'mouse') {
+        } else if (data.data.gameplayMode === GAMEPLAY_MODES.MOUSE) {
             player.mouseModel.position.set(p.x, p.y, p.z);
             player.mouseModel.rotation.set(r.x, r.y, r.z);
             adjustMouse(player.mouseModel);
@@ -35,11 +35,11 @@ function movePlayer(data) {
 
         removeAllModels(player);
 
-        if (player.gameplayMode === 'third-person') {
+        if (player.gameplayMode === GAMEPLAY_MODES.THIRD_PERSON) {
             scene.add(player.cameraModel);
-        } else if (player.gameplayMode === 'cat') {
+        } else if (player.gameplayMode === GAMEPLAY_MODES.CAT) {
             scene.add(player.catModel);
-        } else if (player.gameplayMode === 'mouse') {
+        } else if (player.gameplayMode === GAMEPLAY_MODES.MOUSE) {
             scene.add(player.mouseModel);
         }
     }
@@ -66,11 +66,11 @@ function newPlayer(data) {
         gameplayMode: data.data.gameplayMode
     };
 
-    if (data.data.gameplayMode === 'third-person') {
+    if (data.data.gameplayMode === GAMEPLAY_MODES.THIRD_PERSON) {
         scene.add(cameraModel);
-    } else if (data.data.gameplayMode === 'cat') {
+    } else if (data.data.gameplayMode === GAMEPLAY_MODES.CAT) {
         scene.add(catModel);
-    } else if (data.data.gameplayMode === 'mouse') {
+    } else if (data.data.gameplayMode === GAMEPLAY_MODES.MOUSE) {
         scene.add(mouseModel);
     }
 
@@ -89,8 +89,8 @@ socket.on('bye bye player', function (id) {
 function enterCatMode() {
     lockPointer();
 
-    if (gameplayMode !== 'cat') {
-        gameplayMode = 'cat';
+    if (gameplayMode !== GAMEPLAY_MODES.CAT) {
+        gameplayMode = GAMEPLAY_MODES.CAT;
         document.getElementById('title').innerText = 'Cat';
         scene.remove(mouseMeshBox);
         mouseMeshBox.remove(firstPersonCamera);
@@ -104,8 +104,8 @@ function enterCatMode() {
 function enterMouseMode() {
     lockPointer();
 
-    if (gameplayMode !== 'mouse') {
-        gameplayMode = 'mouse';
+    if (gameplayMode !== GAMEPLAY_MODES.MOUSE) {
+        gameplayMode = GAMEPLAY_MODES.MOUSE;
         document.getElementById('title').innerText = 'Mouse';
         scene.remove(catMeshBox);
         catMeshBox.remove(firstPersonCamera);
@@ -124,15 +124,15 @@ function lockPointer() {
 function enterThirdPersonMode() {
     document.exitPointerLock();
 
-    if (gameplayMode !== 'third-person') {
-        gameplayMode = 'third-person';
+    if (gameplayMode !== GAMEPLAY_MODES.THIRD_PERSON) {
+        gameplayMode = GAMEPLAY_MODES.THIRD_PERSON;
         document.getElementById('title').innerText = 'Third-Person';
         sendUpdateToServer();
     }
 }
 
 function sendUpdateToServer() {
-    if (gameplayMode === 'third-person') {
+    if (gameplayMode === GAMEPLAY_MODES.THIRD_PERSON) {
         var worldPosition = new THREE.Vector3();
         camera.getWorldPosition(worldPosition);
 
@@ -144,9 +144,9 @@ function sendUpdateToServer() {
             }
         };
     } else {
-        if (gameplayMode === 'cat') {
+        if (gameplayMode === GAMEPLAY_MODES.CAT) {
             var mesh = catMeshBox;
-        } else if (gameplayMode === 'mouse') {
+        } else if (gameplayMode === GAMEPLAY_MODES.MOUSE) {
             var mesh = mouseMeshBox;
         }
 
@@ -177,7 +177,7 @@ function checkCatInRangeOfMice() {
     for (var id in players) {
         var otherPlayer = players[id];
 
-        if (otherPlayer.gameplayMode === 'mouse') {
+        if (otherPlayer.gameplayMode === GAMEPLAY_MODES.MOUSE) {
             var otherPlayerPosition = new THREE.Vector3(otherPlayer.position.x, otherPlayer.position.y, otherPlayer.position.z);
 
             var intersects = catSphere.containsPoint(otherPlayerPosition);
@@ -195,7 +195,7 @@ function checkCatInRangeOfMice() {
 }
 
 function tryToCatchMouse() {
-    if (gameplayMode === 'cat') {
+    if (gameplayMode === GAMEPLAY_MODES.CAT) {
         var id = checkCatInRangeOfMice();
 
         if (id !== null) {
@@ -207,10 +207,10 @@ function tryToCatchMouse() {
 function jump() {
     const JUMP_POWER = 0.1;
 
-    if (gameplayMode === 'cat' && catMeshBox.grounded) {
+    if (gameplayMode === GAMEPLAY_MODES.CAT && catMeshBox.grounded) {
         catMeshBox.fallVelocity.set(0, JUMP_POWER, 0);
         catMeshBox.grounded = false;
-    } else if (gameplayMode === 'mouse' && mouseMeshBox.grounded) {
+    } else if (gameplayMode === GAMEPLAY_MODES.MOUSE && mouseMeshBox.grounded) {
         mouseMeshBox.fallVelocity.set(0, JUMP_POWER, 0);
         mouseMeshBox.grounded = false;
     }
