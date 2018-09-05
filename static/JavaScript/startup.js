@@ -1,5 +1,7 @@
 var scene = new THREE.Scene();
 
+const GRAVITY = new THREE.Vector3(0, -0.0025, 0);
+
 var cameraAnchor = new THREE.Object3D();
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight);
 var catMeshBox = getCatMeshBox();
@@ -23,11 +25,11 @@ var stats = new Stats();
 stats.showPanel(0);
 document.body.appendChild(stats.dom);
 
+var walls = [];
+
 // addSkybox();
 
-var ground = getGround();
-
-var walls = [];
+makeGround();
 
 var models = {};
 loadAllModels();

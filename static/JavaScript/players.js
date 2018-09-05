@@ -203,3 +203,15 @@ function tryToCatchMouse() {
         }
     }
 }
+
+function jump() {
+    const JUMP_POWER = 0.1;
+
+    if (gameplayMode === 'cat' && catMeshBox.grounded) {
+        catMeshBox.fallVelocity.set(0, JUMP_POWER, 0);
+        catMeshBox.grounded = false;
+    } else if (gameplayMode === 'mouse' && mouseMeshBox.grounded) {
+        mouseMeshBox.fallVelocity.set(0, JUMP_POWER, 0);
+        mouseMeshBox.grounded = false;
+    }
+}

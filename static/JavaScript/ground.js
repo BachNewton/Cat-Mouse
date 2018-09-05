@@ -1,4 +1,4 @@
-function getGround() {
+function makeGround() {
     var geometry = new THREE.PlaneGeometry(1000, 1000);
     var texture = new THREE.TextureLoader().load('static/Textures/grass.jpg');
     texture.wrapS = THREE.RepeatWrapping;
@@ -7,7 +7,6 @@ function getGround() {
     var material = new THREE.MeshPhongMaterial({ map: texture, shininess: 0 });
     var ground = new THREE.Mesh(geometry, material);
     ground.rotateX(-Math.PI / 2);
-    scene.add(ground);
 
-    return ground;
+    scene.add(ground);
 }

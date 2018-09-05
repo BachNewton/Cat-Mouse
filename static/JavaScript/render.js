@@ -12,9 +12,13 @@ function animate() {
     }
 
     if (gameplayMode === 'cat') {
+        applyGravity(catMeshBox);
+        applyFall(catMeshBox);
         checkCollision(catMeshBox, walls);
         checkCatInRangeOfMice();
     } else if (gameplayMode === 'mouse') {
+        applyGravity(mouseMeshBox);
+        applyFall(mouseMeshBox);
         checkCollision(mouseMeshBox, walls);
     }
 

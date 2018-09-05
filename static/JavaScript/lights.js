@@ -9,9 +9,13 @@ function setUpLights() {
 
     firstPersonCamera.add(spotLightTarget);
     firstPersonCamera.add(spotLight);
+
+    testLight();
 }
 
-// scene.add(new THREE.AmbientLight('white', 0.5));
-// var directionalLight = new THREE.DirectionalLight();
-// directionalLight.position.set(-1, 1, -1);
-// scene.add(directionalLight);
+function testLight() {
+    scene.add(new THREE.AmbientLight('white', 0.5));
+    var directionalLight = new THREE.DirectionalLight();
+    directionalLight.position.set(-1, 1, -1);
+    scene.add(directionalLight);
+}

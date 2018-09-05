@@ -22,7 +22,6 @@ server.listen(5000, function () {
 });
 
 var maze = require('./js/maze.js');
-var walls = maze.getWalls();
 
 var players = {};
 
@@ -31,7 +30,7 @@ io.on('connection', function (socket) {
     socket.on('new player', function () {
         console.log('A new player has connected! ID: ' + socket.id);
 
-        socket.emit('walls', walls);
+        // socket.emit('walls', maze.getWalls());
         socket.emit('cat start', maze.getCatPosition());
         socket.emit('mouse start', maze.getMousePosition());
     });

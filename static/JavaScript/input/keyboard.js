@@ -16,5 +16,9 @@ function checkKey(code) {
         enterThirdPersonMode();
     } else if (code === 'KeyM') {
         enterMouseMode();
+    } else if (code === 'Space') {
+        jump();
+    } else if (code === 'Backslash') {
+        console.log(mouseMeshBox.position);
     }
 }
