@@ -19,6 +19,15 @@ function checkKey(code) {
     } else if (code === 'Space') {
         jump();
     } else if (code === 'Backslash') {
-        console.log('{ ' + mouseMeshBox.position.x + ', ' + mouseMeshBox.position.y + ', ' + mouseMeshBox.position.z + ' }');
+        console.log('{ x: ' + mouseMeshBox.position.x + ', y: ' + mouseMeshBox.position.y + ', z: ' + mouseMeshBox.position.z + ' }');
+        testPositions.push({ x: mouseMeshBox.position.x, y: mouseMeshBox.position.y, z: mouseMeshBox.position.z });
+    } else if (code === 'Period') {
+        var text = 'All Cheese Positions:\n';
+        for (var position of testPositions) {
+            text += '{ x: ' + position.x + ', y: ' + position.y + ', z: ' + position.z + ' },\n';
+        }
+        console.log(text);
     }
 }
+
+var testPositions = [];
