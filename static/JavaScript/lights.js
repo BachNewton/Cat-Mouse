@@ -1,6 +1,7 @@
 function setUpLights() {
     // var spotLight = new THREE.SpotLight('white', 1, 8.75, Math.PI / 4, 0.2, 2);
-    var spotLight = new THREE.SpotLight('white', 1, 14.5, Math.PI / 4, 0.2, 2);
+    // var spotLight = new THREE.SpotLight('white', 1, 14.5, Math.PI / 4, 0.2, 2);
+    var spotLight = new THREE.SpotLight('white', 1, 20, Math.PI / 3, 0.2, 2);
 
     var spotLightTarget = new THREE.Object3D();
     spotLightTarget.translateZ(-1);
