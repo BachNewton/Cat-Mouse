@@ -109,4 +109,5 @@ function applyGravity(mesh) {
 
 function applyFall(mesh) {
     mesh.position.add(mesh.fallVelocity);
+    sendUpdateToServer();
 }

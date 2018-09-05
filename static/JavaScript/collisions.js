@@ -39,6 +39,8 @@ function impulseResponse(object, normal, objects) {
 
         object.position.add(velocity);
 
+        object.translateY(0.001);
+
         checkCollision(object, objects);
     }
 }
