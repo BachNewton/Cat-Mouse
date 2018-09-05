@@ -14,12 +14,12 @@ function animate() {
     if (gameplayMode === GAMEPLAY_MODES.CAT) {
         applyGravity(catMeshBox);
         applyFall(catMeshBox);
-        checkCollision(catMeshBox, walls);
+        checkCollision(catMeshBox, walls, 0);
         checkCatInRangeOfMice();
     } else if (gameplayMode === GAMEPLAY_MODES.MOUSE) {
         applyGravity(mouseMeshBox);
         applyFall(mouseMeshBox);
-        checkCollision(mouseMeshBox, walls);
+        checkCollision(mouseMeshBox, walls, 0);
     }
 
     stats.end();

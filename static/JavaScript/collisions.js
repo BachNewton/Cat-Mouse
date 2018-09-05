@@ -1,4 +1,10 @@
-function checkCollision(object, objects) {
+function checkCollision(object, objects, calls) {
+    if (calls === 0) {
+        object.grounded = false;
+    } else if (calls > 5) {
+        object.translateY(0.005);
+    }
+
     var ray = new THREE.Raycaster();
 
     var worldVertex = new THREE.Vector3();
@@ -18,13 +24,13 @@ function checkCollision(object, objects) {
         var collisionResults = ray.intersectObjects(objects, true);
 
         if (collisionResults.length > 0 && collisionResults[0].distance < distanceToVertex) {
-            impulseResponse(object, collisionResults[0].face.normal, objects);
+            impulseResponse(object, collisionResults[0].face.normal, objects, calls);
             break;
         }
     }
 }
 
-function impulseResponse(object, normal, objects) {
+function impulseResponse(object, normal, objects, calls) {
     var velocity = object.velocity.clone();
     velocity.add(object.fallVelocity);
 
@@ -39,9 +45,7 @@ function impulseResponse(object, normal, objects) {
 
         object.position.add(velocity);
 
-        object.translateY(0.001);
-
-        checkCollision(object, objects);
+        checkCollision(object, objects, calls + 1);
     }
 }
 
