@@ -1,4 +1,6 @@
 function checkCollision(object, objects, calls) {
+    outOfBoundsCheck(object);
+
     if (calls === 0) {
         object.grounded = false;
     } else if (calls > 5) {
@@ -56,4 +58,8 @@ function updateGrounded(object, velocity) {
         object.grounded = true;
         object.fallVelocity.set(0, 0, 0);
     }
+}
+
+function outOfBoundsCheck(object) {
+    object.position.setY(Math.max(0, object.position.y));
 }
